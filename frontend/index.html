@@ -1,40 +1,29 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fake Chat Demo</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
+    <div class="flex justify-center items-center min-h-screen flex-col gap-6 bg-gray-50">
+        <div id="container" class="flex flex-col gap-3">
+            <input id="textholder" type="text" placeholder="Type a message..."
+                class="w-72 h-10 border-2 border-black rounded px-3 focus:outline-none">
 
-
-    <div class="flex justify-center items-center min-h-screen flex-col gap-20">
-        <div id="container">
-
-             <input id="textholder" type="text"   class="w-72 h-10 block mx-auto
-         border-2 border-black
-         bg-white text-black px-3
-         focus:outline-none">
-         <div class="flex">
-
-            <button  class="px-8 py-3 rounded-lg bg-black text-white font-bold block mx-auto mt-2 cursor-pointer" id="sender">Send</button>
-            <button  class="px-8 py-3 rounded-lg bg-black text-white font-bold block mx-auto mt-2 cursor-pointer" id="clearbotton">Clear</button>
-
-         </div>
-             
-
+            <div class="flex gap-4 justify-center">
+                <button id="sender"
+                    class="px-6 py-2 rounded-lg bg-black text-white font-bold cursor-pointer">Send</button>
+                <button id="clearbutton"
+                    class="px-6 py-2 rounded-lg bg-red-600 text-white font-bold cursor-pointer">Clear</button>
+            </div>
         </div>
 
-         <div id="containerofmessage">
-
-         </div>
+        <div id="containerofmessage" class="flex flex-col w-80 max-h-96 overflow-y-auto border p-2 rounded bg-white"></div>
     </div>
 
-   
-
+    <!-- External script file -->
     <script src="script.js"></script>
-
-   
-    
 </body>
 </html>

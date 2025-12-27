@@ -1,37 +1,59 @@
 const express = require('express');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const cors = require('cors');
+
 const app = express();
 const port = 4000;
-const cors = require("cors");
+
+// Middleware
 app.use(cors());
+app.use(express.json()); // <-- must be before routes
 
+// MongoDB setup
+const uri = "mongodb+srv://practice:GjhJ9UTcWqgMDiOm@cluster0.knekqnq.mongodb.net/?appName=Cluster0";
+const client = new MongoClient(uri, {
+    serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
+});
 
+async function run() {
+    try {
+        await client.connect();
+        console.log("Connected to MongoDB!");
 
-let messages=[];
+        const database = client.db('messagedb');
+        const messageCollection = database.collection('messages');
 
-// যদি চাও specific origin allow করতে
-// app.use(cors({ origin: "http://example.com" }));
+        // GET all messages
+        app.get('/message', async (req, res) => {
+            const messages = await messageCollection.find().toArray();
+            res.json(messages);
+        });
 
-app.use(express.json())
+        // POST a new message
+        app.post('/message', async (req, res) => {
+            const newMessage = req.body; // { message: "text" }
+            const result = await messageCollection.insertOne(newMessage);
+            res.json(result);
+        });
 
-app.get('/',(req,res)=>{
+        // DELETE all messages
+        app.delete('/message', async (req, res) => {
+            const result = await messageCollection.deleteMany({});
+            res.json(result);
+        });
 
-    res.send("what i found?");
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-})
+run().catch(console.dir);
 
-app.post('/message',(req,res)=>{
-    const newmessage=req.body;
-    messages.push(newmessage);
-    res.send(newmessage);
-})
-app.get('/message',(req,res)=>{
-   
-    res.send(messages);
+// Test route
+app.get('/', (req, res) => {
+    res.send("Server is running!");
+});
 
-})
-app.delete('/message',(req,res)=>{
-    messages=[];
-     res.json({ success: true });
-})
-
-app.listen(port);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
