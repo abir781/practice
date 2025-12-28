@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1:1 Chat WebSocket</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 flex justify-center items-center min-h-screen">
+
+<div class="flex flex-col gap-4 w-80">
+    <div class="flex gap-2">
+        <input id="sender" placeholder="Sender" class="border p-1 flex-1">
+        <input id="receiver" placeholder="Receiver" class="border p-1 flex-1">
+    </div>
+    <input id="message" placeholder="Type a message" class="border p-2 w-full">
+    <button id="send" class="bg-black text-white p-2 rounded">Send</button>
+    <div id="chat" class="border p-2 h-64 overflow-y-auto bg-white rounded"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
